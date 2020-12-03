@@ -1,27 +1,18 @@
 {
-    "name": "zvitek/pl-replace-variables",
-    "version": "5.9.3",
+    "name": "pattern-lab-global-variables",
+    "version": "0.1.0",
     "description": "",
     "main": "index.js",
     "dependencies": {
-        "fs-extra": "0.30.0",
-        "glob": "7.0.0",
         "lodash": "4.17.15"
     },
     "engines": {
         "node": ">=10.0"
     },
-    "repository": "https://github.com/zvitek/pl-replace-variables",
-    "scripts": {
-        "lint": "eslint src/** index.js postinstall.js",
-        "postinstall": "node ./postinstall.js"
-    },
+    "repository": "https://github.com/zvitek/pattern-lab-global-variables",
     "author": "Zdeněk Vítek",
     "license": "MIT",
-    "homepage": "https://github.com/zvitek/pl-replace-variables",
-    "devDependencies": {
-        "eslint": "4.18.2"
-    },
+    "homepage": "https://github.com/zvitek/pattern-lab-global-variables",
     "publishConfig": {
         "access": "public"
     }
