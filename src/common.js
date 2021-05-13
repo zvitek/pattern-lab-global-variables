@@ -1,6 +1,7 @@
 'use strict';
 
 const _ = require('lodash');
+const fs = require('fs')
 
 /**
  * @param {String} filePath
@@ -17,4 +18,40 @@ function replace(data, replaces) {
     return data;
 }
 
+/**
+ * @param {String} filePath
+ * @return {Promise<Any>}
+ */
+function getContentOfFile(filePath) {
+    const getContent = function () {
+        return new Promise((resolve, reject) => {
+            fs.readFile(filePath, 'utf8', function (err, data) {
+                if (err) reject(err);
+                else resolve(data)
+            });
+        });
+    }
+    return isFileExists(filePath)
+        .then(getContent);
+}
+
+/**
+ * @param {String} filePath
+ * @return {Promise}
+ */
+function isFileExists(filePath) {
+    return new Promise((resolve, reject) => {
+        fs.access(filePath, (err) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(true);
+            }
+        });
+    });
+}
+
+
 module.exports.replace = replace;
+module.exports.isFileExists = isFileExists;
+module.exports.getContentOfFile = getContentOfFile;

@@ -4,6 +4,7 @@ const cmn = require('./src/common');
 
 const pluginName = 'pattern-lab-global-variables';
 const hookName = 'patternlab-pattern-write-begin';
+let variables = {};
 
 /**
  * @param patternlab - global data store which has the handle to hooks
@@ -22,7 +23,6 @@ function registerHooks(patternlab) {
  */
 async function onReplaceVariablesInPattern(params) {
     const [patternlab, pattern] = params;
-    const variables = patternlab.config.plugins[pluginName].variables;
 
     ['template', 'extendedTemplate', 'patternData', 'patternPartialCode'].forEach((key) => {
         if (pattern.hasOwnProperty(key)) {
@@ -65,6 +65,14 @@ function pluginInit(patternlab) {
     if (!patternlab.config.plugins) {
         patternlab.config.plugins = {};
     }
+
+    cmn.isFileExists(process.cwd() + '/' + patternlab.config.plugins[pluginName]['fileWithVariables']).catch(() => {
+        console.error('variable file is not defined');
+        process.exit(1);
+    });
+
+    cmn.getContentOfFile(process.cwd() + '/' + patternlab.config.plugins[pluginName]['fileWithVariables'])
+        .then((content) => variables = JSON.parse(content));
 
     //attempt to only register hooks once
     if (
